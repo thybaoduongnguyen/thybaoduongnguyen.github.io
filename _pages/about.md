@@ -13,7 +13,7 @@ I study how model behavior shifts depending on who is asking, and what this mean
 
 Current research
 ======
-In my master's thesis, supervised by Prof. Orestis Papakyriakopoulos, I audit geopolitical bias in LLM-based fact-checking. The study compares nine US, Chinese, and European models across five contested topics, using persona-conditioned prompting and close to 72,000 model responses. I will present this work as a poster at AI: Hype, Hope and Humanity (Erasmus University Rotterdam, September 2026).
+In my master's thesis, supervised by Prof. Orestis Papakyriakopoulos, I audit geopolitical bias in LLM-based fact-checking. The study compares nine US, Chinese, and European models across five contested topics, using persona-conditioned prompting and close to 72,000 model responses. I presented this work as a poster at AI: Hype, Hope and Humanity (Erasmus University Rotterdam, September 2026), where it received the **Outstanding Poster Award**.
 
 Research experience
 ======
