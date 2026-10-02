@@ -17,11 +17,12 @@ In my master's thesis, supervised by Prof. Orestis Papakyriakopoulos, I audit ge
 
 Research experience
 ======
-- **Chair of Science and Technology Policy**, TUM (2026 to now), qualitative coding of interview data
-- **Emmy Noether Research Group on the Media Portrayal of Majority and Minority Groups**, TUM (2025 to now), intercoder reliability and literature review
-- **PERGAP**, Max Planck Institute for Social Law and Social Policy (2025), LLM-based extraction from legal texts on social security policy
-- **ClimateVisions**, TUM (2024 to 2025), text classification and content analysis of climate communication
-- **MoralPLai**, TUM Institute for Ethics in AI (2024 to 2025), review of quantitative studies on LLM ethics and moral psychology
+- **Student Research Assistant**, Chair of Science and Technology Policy, TUM (2026 to now), qualitative coding of interview data
+- **Student Research Assistant**, Emmy Noether Research Group on the Media Portrayal of Majority and Minority Groups, TUM (2025 to now), intercoder reliability and literature review
+- **Student Research Assistant**, PERGAP, Max Planck Institute for Social Law and Social Policy (2025), LLM-based extraction from legal texts on social security policy
+- **Student Research Assistant**, ClimateVisions, TUM (2024 to 2025), text classification and content analysis of climate communication
+- **Student Assistant**, Institute for Ethics in AI, TUM (2024 to 2025), events and the AI & Human Rights Index
+- **Research Coursework**, MoralPLai, TUM Institute for Ethics in AI (2024 to 2025), review of quantitative studies on LLM ethics and moral psychology
 
 Background
 ======
