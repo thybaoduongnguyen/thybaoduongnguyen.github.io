@@ -318,7 +318,7 @@
 
   <div class="hero">
     <div>
-      <h1>Institutions have always treated citizens unequally. I audit whether language models <em>inherit</em> that bias, reshape it, or build a new one.</h1>
+      <h1>Institutions tend to treat citizens unequally. I audit whether language models inherit that bias in a similar manner.</h1>
       <p class="meta">
         PhD researcher, Leibniz University Hannover<br>
         <a href="mailto:thy.duong@tum.de">thy.duong@tum.de</a> &nbsp;
@@ -413,10 +413,10 @@
   var root = document.documentElement;
   var btn = document.getElementById('settings-btn');
   var panel = document.getElementById('settings-panel');
-
+ 
   function load(key) { try { return localStorage.getItem(key); } catch (e) { return null; } }
   function save(key, val) { try { localStorage.setItem(key, val); } catch (e) {} }
-
+ 
   function apply(setting, value) {
     if (setting === 'theme') {
       if (value === 'auto') root.removeAttribute('data-theme'); else root.setAttribute('data-theme', value);
@@ -429,16 +429,16 @@
       b.setAttribute('aria-pressed', b.getAttribute('data-value') === value ? 'true' : 'false');
     });
   }
-
+ 
   apply('theme', load('site-theme') || 'dark');
   apply('size', load('site-size') || 'normal');
-
+ 
   panel.addEventListener('click', function (e) {
     var b = e.target.closest('button[data-value]');
     if (!b) return;
     apply(b.closest('[data-setting]').getAttribute('data-setting'), b.getAttribute('data-value'));
   });
-
+ 
   function toggle(open) {
     if (open) panel.setAttribute('data-open', ''); else panel.removeAttribute('data-open');
     btn.setAttribute('aria-expanded', open ? 'true' : 'false');
@@ -450,6 +450,16 @@
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') { toggle(false); btn.focus(); }
   });
+ 
+  fetch('https://api.github.com/repos/thybaoduongnguyen/thybaoduongnguyen.github.io/commits?per_page=1')
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (data) {
+      if (!data || !data[0]) return;
+      var d = new Date(data[0].commit.committer.date);
+      document.getElementById('updated').textContent =
+        'Updated ' + d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+    })
+    .catch(function () {});
 })();
 </script>
 </body>
