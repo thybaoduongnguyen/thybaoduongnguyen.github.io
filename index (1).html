@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thy Duong</title>
+<meta name="description" content="Thy Duong. Computational social science, LLM auditing, AI governance and political communication.">
+<meta property="og:title" content="Thy Duong">
+<meta property="og:description" content="Computational social science, LLM auditing, AI governance and political communication.">
+<meta property="og:url" content="https://thybaoduongnguyen.github.io/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;1,8..60,300;1,8..60,400&display=swap" rel="stylesheet">
+<script>
+  try {
+    var t = localStorage.getItem('site-theme') || 'dark'; if (t !== 'auto') document.documentElement.setAttribute('data-theme', t);
+    var s = localStorage.getItem('site-size'); if (s && s !== 'normal') document.documentElement.setAttribute('data-size', s);
+  } catch (e) {}
+</script>
+<style>
+  :root {
+    --paper: #eef1f5;
+    --paper-2: #e3e7ed;
+    --ink: #1a212b;
+    --ink-2: #4e5663;
+    --ink-3: #8a919b;
+    --rule: #cbd2db;
+    --accent: #2c6b5c;
+    --accent-ink: #1f4f44;
+    --serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+    --sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #151a20;
+      --paper-2: #1c222a;
+      --ink: #e8eae5;
+      --ink-2: #aab0b8;
+      --ink-3: #6f7781;
+      --rule: #2d343d;
+      --accent: #7dbfab;
+      --accent-ink: #9fd3c2;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #151a20;
+    --paper-2: #1c222a;
+    --ink: #e8eae5;
+    --ink-2: #aab0b8;
+    --ink-3: #6f7781;
+    --rule: #2d343d;
+    --accent: #7dbfab;
+    --accent-ink: #9fd3c2;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; font-size: 17px; }
+  html[data-size="small"] { font-size: 15px; }
+  html[data-size="large"] { font-size: 19px; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 1rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Settings */
+  .settings { position: relative; }
+  .settings > button {
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--ink-2);
+    cursor: pointer;
+  }
+  .settings > button:hover { color: var(--ink); background: var(--paper-2); }
+  .settings > button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .settings > button svg { width: 1.15rem; height: 1.15rem; }
+  .settings-panel {
+    position: absolute;
+    right: 0;
+    top: calc(100% + .6rem);
+    width: 13.5rem;
+    padding: .9rem 1rem;
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    box-shadow: 0 8px 24px rgba(0,0,0,.08);
+    display: none;
+  }
+  .settings-panel[data-open] { display: block; }
+  .settings-panel .row { display: flex; align-items: center; justify-content: space-between; gap: .75rem; }
+  .settings-panel .row + .row { margin-top: .75rem; padding-top: .75rem; border-top: 1px solid var(--rule); }
+  .settings-panel .label { color: var(--ink-2); font-size: .85rem; }
+  .seg { display: inline-flex; border: 1px solid var(--rule); border-radius: 3px; overflow: hidden; }
+  .seg button {
+    border: 0;
+    background: transparent;
+    color: var(--ink-2);
+    font: inherit;
+    font-size: .8rem;
+    padding: .25rem .55rem;
+    cursor: pointer;
+  }
+  .seg button + button { border-left: 1px solid var(--rule); }
+  .seg button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+  .seg button:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+
+  a { color: var(--accent-ink); text-decoration: none; border-bottom: 1px solid var(--rule); transition: border-color .15s; }
+  a:hover { border-bottom-color: var(--accent); }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-bottom-color: transparent; }
+
+  .wrap { max-width: 46rem; margin: 0 auto; padding: 0 1.5rem; }
+
+  /* Top bar */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: color-mix(in srgb, var(--paper) 92%, transparent);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--rule);
+    font-family: var(--sans);
+    font-size: .92rem;
+  }
+  header .wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    height: 3.5rem;
+  }
+  header .brand {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--ink);
+    border: 0;
+    letter-spacing: -.005em;
+  }
+  header nav { display: flex; align-items: center; gap: 1.5rem; }
+  header nav a { color: var(--ink-2); border: 0; padding: .25rem 0; }
+  header nav a:hover { color: var(--ink); }
+  header nav .cv {
+    color: var(--accent-ink);
+    border: 1px solid var(--accent);
+    border-radius: 2px;
+    padding: .3rem .75rem;
+    font-weight: 500;
+  }
+  header nav .cv:hover { background: var(--accent); color: var(--paper); }
+
+  /* Hero */
+  .hero {
+    padding: 4.5rem 0 3.5rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2.5rem;
+    align-items: start;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 3.5rem;
+  }
+  .hero h1 {
+    font-size: clamp(1.7rem, 3.4vw, 2.4rem);
+    font-weight: 300;
+    line-height: 1.25;
+    letter-spacing: -.012em;
+    margin: 0 0 1.25rem;
+    text-wrap: balance;
+  }
+  .hero h1 em { font-style: italic; font-weight: 300; }
+  .hero .meta {
+    font-family: var(--sans);
+    font-size: .9rem;
+    color: var(--ink-2);
+    margin: 0;
+    line-height: 1.7;
+  }
+  .hero .meta a { color: var(--ink-2); border-bottom-color: var(--rule); }
+  .hero .meta a:hover { color: var(--accent-ink); }
+  .hero img {
+    width: 8.5rem;
+    height: 8.5rem;
+    object-fit: cover;
+    border-radius: 50%;
+    background: var(--paper-2);
+    margin-top: .3rem;
+  }
+
+  main { min-width: 0; }
+  section { margin-bottom: 3.5rem; scroll-margin-top: 4.5rem; }
+  h2 {
+    font-family: var(--serif);
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: var(--ink);
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    margin: 0 0 1.1rem;
+    padding-bottom: .5rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  h3 {
+    font-size: 1.05rem;
+    font-weight: 500;
+    margin: 1.75rem 0 .6rem;
+  }
+  p { margin: 0 0 1rem; }
+  p:last-child { margin-bottom: 0; }
+
+  .award {
+    display: inline-block;
+    font-family: var(--sans);
+    font-size: .8rem;
+    color: var(--accent-ink);
+    border: 1px solid var(--accent);
+    border-radius: 999px;
+    padding: .05rem .6rem;
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+
+  .roles { list-style: none; margin: 0; padding: 0; }
+  .roles li {
+    display: grid;
+    grid-template-columns: 6.5rem 1fr;
+    gap: 1.25rem;
+    padding: .9rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .roles li:last-child { border-bottom: 0; }
+  .roles time {
+    font-family: var(--sans);
+    font-size: .85rem;
+    color: var(--accent-ink);
+    font-weight: 500;
+    padding-top: .25rem;
+    font-variant-numeric: tabular-nums;
+  }
+  .roles b { font-weight: 500; display: block; font-size: 1.1rem; line-height: 1.4; }
+  .roles span { color: var(--ink-2); display: block; font-size: .95rem; margin-top: .1rem; }
+  .roles small { color: var(--ink-3); font-size: .85rem; display: block; margin-top: .2rem; }
+
+  .talks { list-style: none; margin: 0; padding: 0; }
+  .talks li { padding: .75rem 0; border-top: 1px solid var(--rule); }
+  .talks b { font-weight: 500; font-size: 1.1rem; }
+  .talks span { color: var(--ink-2); display: block; font-size: .95rem; margin-top: .1rem; }
+
+  footer {
+    font-family: var(--sans);
+    font-size: .8rem;
+    color: var(--ink-3);
+    padding: 2rem 0 4rem;
+    border-top: 1px solid var(--rule);
+  }
+
+  @media (max-width: 640px) {
+    header nav { gap: 1rem; }
+    header nav a:not(.cv) { font-size: .85rem; }
+    .hero { grid-template-columns: 1fr; padding-top: 3rem; }
+    .hero img { order: -1; width: 6.5rem; height: 6.5rem; }
+    .roles li { grid-template-columns: 1fr; gap: .2rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="brand" href="#top">Thy Duong</a>
+    <nav aria-label="Sections">
+      <a href="#about">About</a>
+      <a href="#research">Research</a>
+      <a href="#experience">Experience</a>
+      <a class="cv" href="files/CV_Thy_Duong.pdf">CV</a>
+      <div class="settings">
+        <button type="button" id="settings-btn" aria-label="Display settings" aria-expanded="false" aria-controls="settings-panel">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          </svg>
+        </button>
+        <div class="settings-panel" id="settings-panel" role="group" aria-label="Display settings">
+          <div class="row">
+            <span class="label">Theme</span>
+            <span class="seg" data-setting="theme">
+              <button type="button" data-value="light">Light</button>
+              <button type="button" data-value="auto">Auto</button>
+              <button type="button" data-value="dark">Dark</button>
+            </span>
+          </div>
+          <div class="row">
+            <span class="label">Text size</span>
+            <span class="seg" data-setting="size">
+              <button type="button" data-value="small" aria-label="Smaller text">A−</button>
+              <button type="button" data-value="normal">A</button>
+              <button type="button" data-value="large" aria-label="Larger text">A+</button>
+            </span>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap" id="top">
+
+  <div class="hero">
+    <div>
+      <h1>Institutions have always treated citizens unequally. I audit whether language models <em>inherit</em> that bias, reshape it, or build a new one.</h1>
+      <p class="meta">
+        PhD researcher, Leibniz University Hannover<br>
+        <a href="mailto:thy.duong@tum.de">thy.duong@tum.de</a> &nbsp;
+        <a href="https://github.com/thybaoduongnguyen">GitHub</a> &nbsp;
+        <a href="https://www.linkedin.com/in/td01">LinkedIn</a>
+      </p>
+    </div>
+    <img src="images/profile.png" alt="Portrait of Thy Duong">
+  </div>
+
+  <section id="about">
+    <h2>About</h2>
+    <p>From December 2026 I am a PhD researcher at Leibniz University Hannover in the ERC-funded project BiASE-AI, led by <a href="https://www.ipw.uni-hannover.de/institut/personenverzeichnis/personen-detailansicht?tx_t3luhepv_t3luhepvoe%5Baction%5D=persHomepage&amp;tx_t3luhepv_t3luhepvoe%5Bcontroller%5D=Organisation&amp;tx_t3luhepv_t3luhepvoe%5Bnavname%5D=24248&amp;cHash=e4f368dc6b323ccd9f47b6e5c2a04146">Prof. Dr. Steffen Eckhard</a>. My dissertation audits bias in AI-mediated public service encounters, extending persona-conditioned auditing from single answers to multi-turn dialogue and across German and English, and asks whether bias produced by AI differs structurally from bias produced by human institutions.</p>
+    <p>I hold an M.Sc. in Politics and Technology (Data &amp; Society) from the Technical University of Munich and a B.A. in International Relations from Karlshochschule International University, including an exchange semester at HSE University in Moscow. My work combines experimental design, statistical testing and text analysis, and sits between computational social science, public administration and AI governance.</p>
+    <p>Feel free to reach out by email.</p>
+  </section>
+
+  <section id="research">
+    <h2>Research</h2>
+    <p>In my master's thesis, supervised by <a href="https://www.professoren.tum.de/en/papakyriakopoulos-orestis">Prof. Orestis Papakyriakopoulos</a>, I audited geopolitical bias in LLM-based fact-checking. The study compares nine US, Chinese and European models across five contested topics, using persona-conditioned prompting and close to 72,000 model responses.</p>
+    <p>I presented this work as a poster at AI: Hype, Hope and Humanity at Erasmus University Rotterdam in September 2026, where it received the <span class="award">Outstanding Poster Award</span>.</p>
+
+    <h3>Conferences</h3>
+    <ul class="talks">
+      <li>
+        <b>Auditing geopolitical bias in LLM-based fact-checking</b> (poster)
+        <span>AI: Hype, Hope and Humanity, Erasmus University Rotterdam, September 2026. Outstanding Poster Award.</span>
+      </li>
+    </ul>
+  </section>
+
+  <section id="experience">
+    <h2>Experience</h2>
+    <ul class="roles">
+      <li>
+        <time>2026 to now</time>
+        <div>
+          <b>Student Research Assistant</b>
+          <span>Chair of Science and Technology Policy, TUM</span>
+          <small>Qualitative coding of interview data</small>
+        </div>
+      </li>
+      <li>
+        <time>2025 to now</time>
+        <div>
+          <b>Student Research Assistant</b>
+          <span>Emmy Noether Research Group on the Media Portrayal of Majority and Minority Groups, TUM</span>
+          <small>Intercoder reliability and literature review</small>
+        </div>
+      </li>
+      <li>
+        <time>2025</time>
+        <div>
+          <b>Student Research Assistant, PERGAP</b>
+          <span>Max Planck Institute for Social Law and Social Policy</span>
+          <small>LLM-based extraction from legal texts on social security policy</small>
+        </div>
+      </li>
+      <li>
+        <time>2024 to 2025</time>
+        <div>
+          <b>Student Research Assistant, ClimateVisions</b>
+          <span>TUM</span>
+          <small>Text classification and content analysis of climate communication</small>
+        </div>
+      </li>
+      <li>
+        <time>2024 to 2025</time>
+        <div>
+          <b>Student Assistant</b>
+          <span>Institute for Ethics in AI, TUM</span>
+          <small>Events and the AI &amp; Human Rights Index</small>
+        </div>
+      </li>
+      <li>
+        <time>2024 to 2025</time>
+        <div>
+          <b>Research Coursework, MoralPLai</b>
+          <span>TUM Institute for Ethics in AI</span>
+          <small>Review of quantitative studies on LLM ethics and moral psychology</small>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <footer>&copy; 2026 Thy Duong</footer>
+
+</main>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  var btn = document.getElementById('settings-btn');
+  var panel = document.getElementById('settings-panel');
+
+  function load(key) { try { return localStorage.getItem(key); } catch (e) { return null; } }
+  function save(key, val) { try { localStorage.setItem(key, val); } catch (e) {} }
+
+  function apply(setting, value) {
+    if (setting === 'theme') {
+      if (value === 'auto') root.removeAttribute('data-theme'); else root.setAttribute('data-theme', value);
+    } else {
+      if (value === 'normal') root.removeAttribute('data-size'); else root.setAttribute('data-size', value);
+    }
+    save('site-' + setting, value);
+    var group = panel.querySelector('[data-setting="' + setting + '"]');
+    Array.prototype.forEach.call(group.querySelectorAll('button'), function (b) {
+      b.setAttribute('aria-pressed', b.getAttribute('data-value') === value ? 'true' : 'false');
+    });
+  }
+
+  apply('theme', load('site-theme') || 'dark');
+  apply('size', load('site-size') || 'normal');
+
+  panel.addEventListener('click', function (e) {
+    var b = e.target.closest('button[data-value]');
+    if (!b) return;
+    apply(b.closest('[data-setting]').getAttribute('data-setting'), b.getAttribute('data-value'));
+  });
+
+  function toggle(open) {
+    if (open) panel.setAttribute('data-open', ''); else panel.removeAttribute('data-open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+  btn.addEventListener('click', function () { toggle(!panel.hasAttribute('data-open')); });
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest('.settings')) toggle(false);
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') { toggle(false); btn.focus(); }
+  });
+})();
+</script>
+</body>
+</html>
