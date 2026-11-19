@@ -10,12 +10,13 @@
 <meta property="og:url" content="https://thybaoduongnguyen.github.io/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;1,8..60,300;1,8..60,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;1,8..60,300;1,8..60,400&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
 <script>
   document.documentElement.classList.add('js');
   try {
     var t = localStorage.getItem('site-theme') || 'dark'; if (t !== 'auto') document.documentElement.setAttribute('data-theme', t);
     var s = localStorage.getItem('site-size'); if (s && s !== 'normal') document.documentElement.setAttribute('data-size', s);
+    var f = localStorage.getItem('site-font'); if (f && f !== 'serif') document.documentElement.setAttribute('data-font', f);
   } catch (e) {}
 </script>
 <style>
@@ -52,6 +53,12 @@
     --rule: #2d343d;
     --accent: #7dbfab;
     --accent-ink: #9fd3c2;
+  }
+
+  html[data-font="sans"] { --serif: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif; }
+  html[data-font="legible"] {
+    --serif: "Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --sans: "Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", sans-serif;
   }
 
   * { box-sizing: border-box; }
@@ -91,7 +98,7 @@
     position: absolute;
     right: 0;
     top: calc(100% + .6rem);
-    width: 13.5rem;
+    width: 15rem;
     padding: .9rem 1rem;
     background: var(--paper);
     border: 1px solid var(--rule);
@@ -121,7 +128,7 @@
   a:hover { border-bottom-color: var(--accent); }
   a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-bottom-color: transparent; }
 
-  .wrap { max-width: 46rem; margin: 0 auto; padding: 0 1.5rem; }
+  .wrap { max-width: 64rem; margin: 0 auto; padding: 0 1.5rem; }
 
   /* Top bar */
   header {
@@ -269,6 +276,28 @@
     padding: .15rem .7rem;
   }
 
+  /* About page, profile card beside the text */
+  .profile { display: grid; grid-template-columns: 14rem 1fr; gap: 3.5rem; align-items: start; }
+  .card { text-align: center; position: sticky; top: 5.5rem; }
+  .card img { width: 11rem; height: 11rem; object-fit: cover; border-radius: 50%; background: var(--paper-2); }
+  .card .name { font-size: 1.55rem; font-weight: 400; margin: 1rem 0 .3rem; line-height: 1.2; }
+  .card .role { font-family: var(--sans); font-size: .9rem; color: var(--ink-2); line-height: 1.5; margin: 0 0 1rem; }
+  .card .links { font-family: var(--sans); font-size: .88rem; display: flex; justify-content: center; flex-wrap: wrap; gap: .4rem 1rem; }
+  .bio h1 {
+    font-size: clamp(1.45rem, 2.6vw, 1.95rem);
+    font-weight: 300;
+    line-height: 1.3;
+    letter-spacing: -.01em;
+    margin: 0 0 2.5rem;
+    text-wrap: balance;
+  }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+  .edu { list-style: none; margin: 0 0 1rem; padding: 0; }
+  .edu li { margin-bottom: .8rem; }
+  .edu b { display: block; font-weight: 500; line-height: 1.4; }
+  .edu span { display: block; color: var(--ink-2); font-size: .92rem; line-height: 1.45; }
+  main > section:not(#about) { max-width: 48rem; }
+
   /* One section at a time (only when JavaScript runs, so the page still works without it) */
   html.js .hero { margin-bottom: 0; }
   html.js main > section { display: none; padding-top: 3rem; }
@@ -295,6 +324,9 @@
     .hero { grid-template-columns: 1fr; padding-top: 3rem; }
     .hero img { order: -1; width: 6.5rem; height: 6.5rem; }
     .roles li { grid-template-columns: 1fr; gap: .2rem; }
+    .profile, .cols { grid-template-columns: 1fr; gap: 2rem; }
+    .card { position: static; }
+    .card img { width: 8rem; height: 8rem; }
   }
 </style>
 </head>
@@ -326,6 +358,14 @@
             </span>
           </div>
           <div class="row">
+            <span class="label">Font</span>
+            <span class="seg" data-setting="font">
+              <button type="button" data-value="serif">Serif</button>
+              <button type="button" data-value="sans">Sans</button>
+              <button type="button" data-value="legible" aria-label="Easy-to-read font">Easy</button>
+            </span>
+          </div>
+          <div class="row">
             <span class="label">Text size</span>
             <span class="seg" data-setting="size">
               <button type="button" data-value="small" aria-label="Smaller text">A−</button>
@@ -341,65 +381,66 @@
 
 <main class="wrap" id="top">
 
-  <div class="hero">
-    <div>
-      <h1>Institutions tend to treat citizens unequally. I audit whether language models inherit that bias in a similar manner.</h1>
-      <p class="meta">
-        PhD researcher, Leibniz University Hannover<br>
-        <a href="mailto:thy.duong@tum.de">thy.duong@tum.de</a> &nbsp;
-        <a href="https://github.com/thybaoduongnguyen" target="_blank" rel="noopener">GitHub</a> &nbsp;
-        <a href="https://www.linkedin.com/in/td01" target="_blank" rel="noopener">LinkedIn</a>
-      </p>
-    </div>
-    <img src="images/profile.png" alt="Portrait of Thy Duong">
-  </div>
-
   <section id="about">
-    <h2>About</h2>
-    <p>From December 2026 I am a PhD researcher at Leibniz University Hannover in the ERC-funded project <a href="https://cordis.europa.eu/project/id/101170283" target="_blank" rel="noopener">BiASE-AI</a>, led by <a href="https://www.ipw.uni-hannover.de/institut/arbeitsbereiche/verwaltung-und-politik/team/steffen-eckhard" target="_blank" rel="noopener">Prof. Dr. Steffen Eckhard</a>. My dissertation will examine bias in AI-mediated public service encounters and how it compares to bias in interactions with human civil servants.</p>
-    <p>My work combines experimental design, statistical testing and text analysis, and sits between computational social science, public administration and AI governance.</p>
-    <p>My interest in politics started early. In high school I debated competitively and represented Vietnam at the Harvard College World Schools Invitational.</p>
-    <p>Feel free to reach out by email.</p>
+    <div class="profile">
+      <aside class="card">
+        <img src="images/profile.png" alt="Portrait of Thy Duong">
+        <p class="name">Thy Duong</p>
+        <p class="role">PhD Researcher<br><a href="https://www.ipw.uni-hannover.de/institut/arbeitsbereiche/verwaltung-und-politik" target="_blank" rel="noopener">Leibniz University Hannover</a></p>
+        <p class="links">
+          <a href="mailto:thy.duong@tum.de">Email</a>
+          <a href="https://github.com/thybaoduongnguyen" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://www.linkedin.com/in/td01" target="_blank" rel="noopener">LinkedIn</a>
+        </p>
+      </aside>
 
-    <h3>Research interests</h3>
-    <ul class="keywords">
-      <li>LLM auditing</li>
-      <li>Algorithmic bias</li>
-      <li>AI in public administration</li>
-      <li>AI governance</li>
-      <li>Computational social science</li>
-      <li>Political communication</li>
-    </ul>
+      <div class="bio">
+        <h1>Institutions tend to treat citizens unequally. I audit whether language models inherit that bias in a similar manner.</h1>
+        <h2>About</h2>
+        <p>From December 2026 I am a PhD researcher at Leibniz University Hannover in the ERC-funded project <a href="https://cordis.europa.eu/project/id/101170283" target="_blank" rel="noopener">BiASE-AI</a>, led by <a href="https://www.ipw.uni-hannover.de/institut/arbeitsbereiche/verwaltung-und-politik/team/steffen-eckhard" target="_blank" rel="noopener">Prof. Dr. Steffen Eckhard</a>. My dissertation will examine bias in AI-mediated public service encounters and how it compares to bias in interactions with human civil servants.</p>
+        <p>My work combines experimental design, statistical testing and text analysis, and sits between computational social science, public administration and AI governance.</p>
+        <p>My interest in politics started early. In high school I debated competitively and represented Vietnam at the Harvard College World Schools Invitational.</p>
+        <p>Feel free to reach out by email.</p>
 
-    <h3>Languages</h3>
-    <p>Vietnamese (native), English (proficient), German (C1)</p>
+        <div class="cols">
+          <div>
+            <h3>Research interests</h3>
+            <ul class="keywords">
+              <li>LLM auditing</li>
+              <li>Algorithmic bias</li>
+              <li>AI in public administration</li>
+              <li>AI governance</li>
+              <li>Computational social science</li>
+              <li>Political communication</li>
+            </ul>
 
-    <h3>Education</h3>
-    <ul class="roles">
-      <li>
-        <time>2026 to now</time>
-        <div>
-          <b>Ph.D.</b>
-          <span><a href="https://www.ipw.uni-hannover.de/institut/arbeitsbereiche/verwaltung-und-politik" target="_blank" rel="noopener">Chair of Public Administration and Politics</a>, Institute of Political Science, Leibniz University Hannover</span>
+            <h3>Languages</h3>
+            <p>Vietnamese (native), English (proficient), German (C1)</p>
+
+            <h3>Tools</h3>
+            <p>Python, R, LLM APIs, MAXQDA, noScribe</p>
+          </div>
+
+          <div>
+            <h3>Education</h3>
+            <ul class="edu">
+              <li>
+                <b>Ph.D., 2026 to now</b>
+                <span><a href="https://www.ipw.uni-hannover.de/institut/arbeitsbereiche/verwaltung-und-politik" target="_blank" rel="noopener">Chair of Public Administration and Politics</a>, Leibniz University Hannover</span>
+              </li>
+              <li>
+                <b>M.Sc. Politics and Technology, 2023 to 2026</b>
+                <span>Technical University of Munich, with distinction</span>
+              </li>
+              <li>
+                <b>B.A. International Relations, 2020 to 2023</b>
+                <span>Karlshochschule International University, exchange semester at HSE University, Moscow</span>
+              </li>
+            </ul>
+          </div>
         </div>
-      </li>
-      <li>
-        <time>2023 to 2026</time>
-        <div>
-          <b>M.Sc. Politics and Technology (Data &amp; Society)</b>
-          <span>Technical University of Munich</span>
-          <small>With distinction</small>
-        </div>
-      </li>
-      <li>
-        <time>2020 to 2023</time>
-        <div>
-          <b>B.A. International Relations</b>
-          <span>Karlshochschule International University</span>
-          <small>Exchange semester at HSE University, Moscow</small>
-        </div>
-      </li>
-    </ul>
+      </div>
+    </div>
   </section>
 
   <section id="research">
@@ -522,8 +563,10 @@
   function apply(setting, value) {
     if (setting === 'theme') {
       if (value === 'auto') root.removeAttribute('data-theme'); else root.setAttribute('data-theme', value);
-    } else {
+    } else if (setting === 'size') {
       if (value === 'normal') root.removeAttribute('data-size'); else root.setAttribute('data-size', value);
+    } else {
+      if (value === 'serif') root.removeAttribute('data-font'); else root.setAttribute('data-font', value);
     }
     save('site-' + setting, value);
     var group = panel.querySelector('[data-setting="' + setting + '"]');
@@ -534,6 +577,7 @@
  
   apply('theme', load('site-theme') || 'dark');
   apply('size', load('site-size') || 'normal');
+  apply('font', load('site-font') || 'serif');
  
   panel.addEventListener('click', function (e) {
     var b = e.target.closest('button[data-value]');
@@ -554,14 +598,12 @@
   });
  
   var sections = document.querySelectorAll('main > section');
-  var hero = document.querySelector('.hero');
   var navLinks = document.querySelectorAll('header nav a[href^="#"]');
   function show() {
     var id = location.hash.slice(1);
     if (!document.querySelector('main > section#' + CSS.escape(id || 'about'))) id = 'about';
     id = id || 'about';
     Array.prototype.forEach.call(sections, function (s) { s.classList.toggle('active', s.id === id); });
-    hero.hidden = id !== 'about';
     Array.prototype.forEach.call(navLinks, function (a) {
       if (a.getAttribute('href') === '#' + id) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
     });
