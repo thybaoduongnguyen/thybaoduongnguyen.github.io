@@ -309,6 +309,12 @@
   .book-text b { display: block; font-weight: 500; font-size: 1.15rem; line-height: 1.4; }
   .book:hover .book-text b { color: var(--accent-ink); }
   .book-meta { display: block; font-family: var(--sans); font-size: .82rem; color: var(--ink-3); margin-top: .35rem; }
+  .rl-title { margin-top: .25rem; }
+  .reading { margin: 0; padding-left: 1.3rem; }
+  .reading li { margin-bottom: .9rem; }
+  .reading a { border-bottom: 0; }
+  .reading a:hover { border-bottom: 1px solid var(--accent); }
+  .reading span { display: block; font-family: var(--sans); font-size: .82rem; color: var(--ink-3); margin-top: .2rem; }
   .soon { font-family: var(--sans); font-size: .9rem; color: var(--ink-3); }
   .tips { margin: 0; padding-left: 1.3rem; }
   .tips li { margin-bottom: .7rem; }
@@ -589,7 +595,7 @@
       </button>
       <button type="button" role="tab" data-panel="res-academic" aria-selected="false">
         <b>Academic resources</b>
-        <span>Teaching materials and research tools, coming soon</span>
+        <span>A reading list of academic books I recommend</span>
       </button>
     </div>
 
@@ -604,7 +610,13 @@
     </div>
 
     <div class="subpanel" id="res-academic" role="tabpanel" hidden>
-      <p class="soon">Nothing here yet. Materials will be added over time.</p>
+      <h3 class="rl-title">Reading list</h3>
+      <ol class="reading">
+        <li>
+          <a href="https://politicalscience.stanford.edu/publications/text-data-new-framework-machine-learning-and-social-sciences" target="_blank" rel="noopener"><i>Text as Data: A New Framework for Machine Learning and the Social Sciences</i></a>
+          <span>Justin Grimmer, Margaret E. Roberts and Brandon M. Stewart · Princeton University Press, 2022</span>
+        </li>
+      </ol>
     </div>
   </section>
 
