@@ -303,6 +303,12 @@
   .subnav button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
   @media (max-width: 640px) { .subnav { grid-template-columns: 1fr; } }
   .subpanel[hidden] { display: none; }
+  .book { display: flex; align-items: center; gap: 1.25rem; border: 0; color: var(--ink); }
+  .book img { width: 7.5rem; height: auto; border: 1px solid var(--rule); border-radius: 2px; flex-shrink: 0; transition: transform .15s; }
+  .book:hover img { transform: translateY(-2px); border-color: var(--accent); }
+  .book-text b { display: block; font-weight: 500; font-size: 1.15rem; line-height: 1.4; }
+  .book:hover .book-text b { color: var(--accent-ink); }
+  .book-meta { display: block; font-family: var(--sans); font-size: .82rem; color: var(--ink-3); margin-top: .35rem; }
   .soon { font-family: var(--sans); font-size: .9rem; color: var(--ink-3); }
   .tips { margin: 0; padding-left: 1.3rem; }
   .tips li { margin-bottom: .7rem; }
@@ -588,12 +594,13 @@
     </div>
 
     <div class="subpanel" id="res-phd" role="tabpanel">
-      <ul class="talks">
-        <li>
-          <b>Hướng dẫn apply PhD tại Đức cho sinh viên Việt Nam</b> (in Vietnamese)
-          <span>How PhDs work in Germany, a timeline for your master's, where to find positions, contacting professors, an application checklist, interviews and an FAQ, plus research institutes, companies and funders. <a href="files/phd-germany-guide-vi.pdf" target="_blank" rel="noopener">Guide (PDF)</a></span>
-        </li>
-      </ul>
+      <a class="book" href="files/phd-germany-guide-vi.pdf" target="_blank" rel="noopener">
+        <img src="images/phd-guide-cover.png" alt="Cover of the guide Hướng dẫn apply PhD tại Đức cho sinh viên Việt Nam">
+        <span class="book-text">
+          <b>Hướng dẫn apply PhD tại Đức cho sinh viên Việt Nam</b>
+          <span class="book-meta">In Vietnamese · PDF</span>
+        </span>
+      </a>
     </div>
 
     <div class="subpanel" id="res-academic" role="tabpanel" hidden>
