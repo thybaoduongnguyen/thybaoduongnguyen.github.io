@@ -310,7 +310,8 @@
   .book:hover .book-text b { color: var(--accent-ink); }
   .book-meta { display: block; font-family: var(--sans); font-size: .82rem; color: var(--ink-3); margin-top: .35rem; }
   .rl-title { margin-top: .25rem; }
-  .reading { margin: 0; padding-left: 1.3rem; }
+  .rl-year { font-family: var(--sans); font-size: .85rem; font-weight: 500; color: var(--accent-ink); letter-spacing: .05em; margin: .5rem 0 .6rem; padding-bottom: .3rem; border-bottom: 1px solid var(--rule); }
+  .reading { margin: 0 0 1.5rem; padding-left: 1.3rem; }
   .reading li { margin-bottom: .9rem; }
   .reading a { border-bottom: 0; }
   .reading a:hover { border-bottom: 1px solid var(--accent); }
@@ -585,7 +586,7 @@
 
   <section id="resources">
     <h2>Resources</h2>
-    <p>Guides and materials for students and researchers, including a guide for Vietnamese students who want to apply for a PhD in Germany.</p>
+    <p>I like to reflect on my experiences and share what I have learned along the way. Here you will find guides I have written, such as one for Vietnamese students who want to apply for a PhD in Germany, and the academic books I am reading.</p>
     <p lang="vi"><i>Tài liệu dành cho các bạn sinh viên Việt Nam muốn làm PhD tại Đức.</i></p>
 
     <div class="subnav" role="tablist" aria-label="Resource categories">
@@ -595,7 +596,7 @@
       </button>
       <button type="button" role="tab" data-panel="res-academic" aria-selected="false">
         <b>Academic resources</b>
-        <span>A reading list of academic books I recommend</span>
+        <span>Academic books I am reading</span>
       </button>
     </div>
 
@@ -610,7 +611,8 @@
     </div>
 
     <div class="subpanel" id="res-academic" role="tabpanel" hidden>
-      <h3 class="rl-title">Reading list</h3>
+      <h3 class="rl-title">What I am reading</h3>
+      <p class="rl-year">2026</p>
       <ol class="reading">
         <li>
           <a href="https://politicalscience.stanford.edu/publications/text-data-new-framework-machine-learning-and-social-sciences" target="_blank" rel="noopener"><i>Text as Data: A New Framework for Machine Learning and the Social Sciences</i></a>
