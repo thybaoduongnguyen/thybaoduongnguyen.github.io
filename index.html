@@ -292,6 +292,18 @@
     text-wrap: balance;
   }
   .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+  .subnav { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; margin: 1.25rem 0 1.75rem; }
+  .subnav button { text-align: left; border: 1px solid var(--rule); background: transparent; color: var(--ink); font: inherit; padding: .8rem 1rem .85rem; border-radius: 6px; cursor: pointer; position: relative; }
+  .subnav button b { display: block; font-family: var(--serif); font-weight: 500; font-size: 1.05rem; }
+  .subnav button span { display: block; font-family: var(--sans); font-size: .82rem; color: var(--ink-2); margin-top: .2rem; line-height: 1.4; }
+  .subnav button::after { content: "\2192"; position: absolute; right: .9rem; top: .75rem; color: var(--ink-3); font-family: var(--sans); }
+  .subnav button:hover { border-color: var(--accent); }
+  .subnav button[aria-selected="true"] { border-color: var(--accent); background: var(--paper-2); box-shadow: inset 3px 0 0 var(--accent); }
+  .subnav button[aria-selected="true"]::after { content: "\2193"; color: var(--accent-ink); }
+  .subnav button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  @media (max-width: 640px) { .subnav { grid-template-columns: 1fr; } }
+  .subpanel[hidden] { display: none; }
+  .soon { font-family: var(--sans); font-size: .9rem; color: var(--ink-3); }
   .tips { margin: 0; padding-left: 1.3rem; }
   .tips li { margin-bottom: .7rem; }
   .tips b { font-weight: 500; }
@@ -561,24 +573,32 @@
 
   <section id="resources">
     <h2>Resources</h2>
-    <p>This page collects material for students who are thinking about a PhD, especially Vietnamese students who want to apply for a PhD in Germany.</p>
-    <p lang="vi"><i>Tài liệu hướng dẫn apply PhD tại Đức dành cho sinh viên Việt Nam, kèm một số kinh nghiệm từ con đường nghiên cứu của mình.</i></p>
+    <p>Guides and materials for students and researchers, including a guide for Vietnamese students who want to apply for a PhD in Germany.</p>
+    <p lang="vi"><i>Tài liệu dành cho các bạn sinh viên Việt Nam muốn làm PhD tại Đức.</i></p>
 
-    <h3>PhD application guide</h3>
-    <ul class="talks">
-      <li>
-        <b>Hướng dẫn apply PhD tại Đức cho sinh viên Việt Nam</b> (in Vietnamese)
-        <span>How PhDs work in Germany, a timeline for your master's, where to find positions, contacting professors, an application checklist, interviews, an FAQ, and a list of research institutes, companies and funders. <a href="files/phd-germany-guide-vi.pdf" target="_blank" rel="noopener">Guide (PDF)</a></span>
-      </li>
-    </ul>
+    <div class="subnav" role="tablist" aria-label="Resource categories">
+      <button type="button" role="tab" data-panel="res-phd" aria-selected="true">
+        <b>PhD in Germany</b>
+        <span>A step-by-step guide to applying, in Vietnamese (PDF)</span>
+      </button>
+      <button type="button" role="tab" data-panel="res-academic" aria-selected="false">
+        <b>Academic resources</b>
+        <span>Teaching materials and research tools, coming soon</span>
+      </button>
+    </div>
 
-    <h3>Tips from my research path</h3>
-    <ol class="tips">
-      <li><b>Start as a HiWi early:</b> My first student research job led to the next ones. Ask the professors whose courses you take whether their group needs help.</li>
-      <li><b>Write a thesis you can present:</b> Choose a topic close to the PhD you want, and submit an abstract to a conference or poster session. It shows research potential even without a publication.</li>
-      <li><b>Search in German as well as English:</b> Many paid PhD positions are advertised as Wissenschaftliche:r Mitarbeiter:in, not as a PhD.</li>
-      <li><b>Apply for fit, not prestige:</b> A project that matches your methods and interests is a stronger application than a famous name that does not.</li>
-    </ol>
+    <div class="subpanel" id="res-phd" role="tabpanel">
+      <ul class="talks">
+        <li>
+          <b>Hướng dẫn apply PhD tại Đức cho sinh viên Việt Nam</b> (in Vietnamese)
+          <span>How PhDs work in Germany, a timeline for your master's, where to find positions, contacting professors, an application checklist, interviews and an FAQ, plus research institutes, companies and funders. <a href="files/phd-germany-guide-vi.pdf" target="_blank" rel="noopener">Guide (PDF)</a></span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="subpanel" id="res-academic" role="tabpanel" hidden>
+      <p class="soon">Nothing here yet. Materials will be added over time.</p>
+    </div>
   </section>
 
   <footer>&copy; 2026 Thy Duong &nbsp;·&nbsp; Hannover, Germany &nbsp;·&nbsp; <span id="updated"></span></footer>
@@ -645,6 +665,17 @@
   }
   window.addEventListener('hashchange', show);
   show();
+
+  var subBtns = document.querySelectorAll('.subnav button');
+  Array.prototype.forEach.call(subBtns, function (b) {
+    b.addEventListener('click', function () {
+      Array.prototype.forEach.call(subBtns, function (o) {
+        var on = o === b;
+        o.setAttribute('aria-selected', on ? 'true' : 'false');
+        document.getElementById(o.getAttribute('data-panel')).hidden = !on;
+      });
+    });
+  });
 
   fetch('https://api.github.com/repos/thybaoduongnguyen/thybaoduongnguyen.github.io/commits?per_page=1')
     .then(function (r) { return r.ok ? r.json() : null; })
