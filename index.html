@@ -489,7 +489,7 @@
     <ul class="talks">
       <li>
         <b>Auditing geopolitical bias in LLM-based fact-checking</b> (poster)
-        <span>AI Hype, Hope and Humanity Festival, Erasmus University Rotterdam, September 2026. <a href="files/2026-poster-aihhh.pdf" target="_blank" rel="noopener">Poster (PDF)</a></span>
+        <span>AI Hype, Hope and Humanity Festival, Erasmus University Rotterdam, September 2026. <a href="files/2026-poster-aihhh.pdf" target="_blank" rel="noopener" data-goatcounter-click="poster-pdf" data-goatcounter-title="Poster PDF">Poster (PDF)</a></span>
       </li>
     </ul>
   </section>
@@ -601,7 +601,7 @@
     </div>
 
     <div class="subpanel" id="res-phd" role="tabpanel">
-      <a class="book" href="files/phd-germany-guide-vi.pdf" target="_blank" rel="noopener">
+      <a class="book" href="files/phd-germany-guide-vi.pdf" target="_blank" rel="noopener" data-goatcounter-click="phd-guide-pdf" data-goatcounter-title="PhD guide PDF">
         <img src="images/phd-guide-cover.png" alt="Cover of the guide Hướng dẫn apply PhD tại Đức cho sinh viên Việt Nam">
         <span class="book-text">
           <b>Hướng dẫn apply PhD tại Đức cho sinh viên Việt Nam</b>
@@ -720,5 +720,12 @@
     .catch(function () {});
 })();
 </script>
+<script>
+  window.goatcounter = { path: function () { return location.pathname + (location.hash || '#about') } };
+  window.addEventListener('hashchange', function () {
+    if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({ path: location.pathname + location.hash });
+  });
+</script>
+<script data-goatcounter="https://thyduong.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
